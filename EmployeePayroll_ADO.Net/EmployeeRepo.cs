@@ -61,7 +61,6 @@ namespace EmployeePayroll_ADO.Net
             {
                 using (this.connection)
                 {
-
                     SqlCommand command = new SqlCommand("SpAddEmployeeDetails", this.connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@ID", model.Id);
@@ -102,7 +101,6 @@ namespace EmployeePayroll_ADO.Net
         public List<EmployeeModel> GetAllEmployees()
         {
             List<EmployeeModel> EmployeeList = new List<EmployeeModel>();
-
             SqlCommand com = new SqlCommand("spGetAllEmployeePayroll", connection);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
@@ -156,10 +154,25 @@ namespace EmployeePayroll_ADO.Net
         public bool DeleteEmployee(int Id)
         {
             SqlCommand com = new SqlCommand("spDeleteEmployeeDetails", connection);
-
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@Id", Id);
-
+            connection.Open();
+            int i = com.ExecuteNonQuery();
+            connection.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool RetrieveEmployeeByStartDateDate(DateTime date)
+        {
+            SqlCommand com = new SqlCommand("spDisplayRecordGivenDateRange", connection;
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@StartDate", date);
             connection.Open();
             int i = com.ExecuteNonQuery();
             connection.Close();

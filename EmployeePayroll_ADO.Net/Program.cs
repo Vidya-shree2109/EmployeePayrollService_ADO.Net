@@ -11,7 +11,7 @@ public class Program
 
         while (verify)
         {
-            Console.WriteLine("\nEnter\n1. To insert data into database\nSs2.Reteive Data\n3.Update Employee Details\n4.Delete Employee From database\n5.Exit\n");
+            Console.WriteLine("\nEnter\n1. To insert data into database\nSs2.Reteive Data\n3.Update Employee Details\n4.Delete Employee From database\n5.Retreive Employees By StartDate\n6.Exit\n");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -65,6 +65,19 @@ public class Program
                     }
                     break;
                 case 5:
+                    List<EmployeeModel> dateList = payrollService.GetAllEmployees();
+                    Console.WriteLine("##########->Please Enter the Date<-##########");
+                    DateTime dateTime = Convert.ToDateTime(Console.ReadLine());
+                    payrollService.RetrieveEmployeeByStartDateDate(dateTime);
+                    foreach (EmployeeModel data in dateList)
+                    {
+                        if (data.StartDate.Equals(dateTime))
+                        {
+                            Console.WriteLine(data.Id + " " + data.Name + " " + data.Salary + " " + data.StartDate + " " + data.Gender + " " + data.Phone + " " + data.Address + " " + data.Department + " " + data.BasicPay + " " + data.Deduction + " " + data.TaxablePay + " " + data.IncomeTax + " " + data.NetPay);
+                        }
+                    }
+                    break;
+                case 6:
                     verify = false;
                     break;
                 default:
