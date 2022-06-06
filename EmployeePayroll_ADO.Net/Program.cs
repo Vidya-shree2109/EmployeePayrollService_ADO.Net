@@ -11,7 +11,7 @@ public class Program
 
         while (verify)
         {
-            Console.WriteLine("\nEnter\n1. To insert data into database\n2.Reteive Data\n3.Update Employee Details\n4.Exit\n");
+            Console.WriteLine("\nEnter\n1. To insert data into database\nSs2.Reteive Data\n3.Update Employee Details\n4.Delete Employee From database\n5.Exit\n");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -47,6 +47,24 @@ public class Program
                     payrollService.UpdateEmployee(model);
                     break;
                 case 4:
+                    EmployeeModel emp = new EmployeeModel();
+                    List<EmployeeModel> eList = payrollService.GetAllEmployees();
+                    Console.WriteLine("\nEnter the Employee Id to Delete : ");
+                    int employeeId = Convert.ToInt32(Console.ReadLine());
+                    foreach (EmployeeModel data in eList)
+                    {
+                        if (data.Id == employeeId)
+                        {
+                            payrollService.DeleteEmployee(employeeId);
+                            Console.WriteLine("\nEmployee Deleted Successfully !");
+                        }
+                        else
+                        {
+                            Console.WriteLine(employeeId + "is not in the database");
+                        }
+                    }
+                    break;
+                case 5:
                     verify = false;
                     break;
                 default:
