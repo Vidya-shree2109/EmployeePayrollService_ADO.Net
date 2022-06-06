@@ -11,7 +11,7 @@ public class Program
 
         while (verify)
         {
-            Console.WriteLine("\nEnter\n1. To insert data into database\n2.Exit\n");
+            Console.WriteLine("\nEnter\n1. To insert data into database\n\n2.Reteive Data3.Exit\n");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -33,6 +33,13 @@ public class Program
                     payrollService.AddEmployee(employeeModel);
                     break;
                 case 2:
+                    List<EmployeeModel> employeeList = payrollService.GetAllEmployees();
+                    foreach (EmployeeModel data in employeeList)
+                    {
+                        Console.WriteLine(data.Id + " " + data.Name + " " + data.Salary + " " + data.StartDate + " " + data.Gender + " " + data.Address + " " + data.Phone + " " + data.BasicPay + " " + data.Deduction + " " + data.TaxablePay + " " + data.IncomeTax + " " + data.NetPay);
+                    }
+                    break;
+                case 3:
                     verify = false;
                     break;
                 default:

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -99,5 +100,41 @@ namespace EmployeePayroll_ADO.Net
             }
             return false;
         }
+        public List<EmployeeModel> GetAllEmployees()
+        {
+            List<EmployeeModel> EmployeeList = new List<EmployeeModel>();
+
+            SqlCommand com = new SqlCommand("spGetAllEmployeePayroll", connection);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+
+            connection.Open();
+            da.Fill(dt);
+            connection.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                EmployeeList.Add(
+                new EmployeeModel
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    Name = Convert.ToString(dr["Name"]),
+                    Salary = Convert.ToString(dr["Salary"]),
+                    StartDate = Convert.ToDateTime(dr["StartDate"]),
+                    Gender = Convert.ToChar(dr["Gender"]),
+                    Phone = Convert.ToString(dr["ContactNumber"]),
+                    Address = Convert.ToString(dr["Address"]),
+                    Department = Convert.ToString(dr["Department"]),
+                    BasicPay = Convert.ToDecimal(dr["Pay"]),
+                    Deduction = Convert.ToDouble(dr["Deduction"]),
+                    TaxablePay = Convert.ToDouble(dr["TaxablePay"]),
+                    IncomeTax = Convert.ToDouble(dr["IncomeTax"]),
+                    NetPay = Convert.ToDouble(dr["NetPay"])
+                }
+                    );
+            }
+            return EmployeeList;
+        }
+
     }
 }
