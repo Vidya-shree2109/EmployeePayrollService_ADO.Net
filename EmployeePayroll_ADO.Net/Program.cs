@@ -11,7 +11,7 @@ public class Program
 
         while (verify)
         {
-            Console.WriteLine("\nEnter\n1. To insert data into database\n\n2.Reteive Data3.Exit\n");
+            Console.WriteLine("\nEnter\n1. To insert data into database\n2.Reteive Data\n3.Update Employee Details\n4.Exit\n");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
             {
@@ -40,6 +40,13 @@ public class Program
                     }
                     break;
                 case 3:
+                    EmployeeModel model = new EmployeeModel();
+                    model.Id = 106;
+                    model.Salary = "25000";
+                    model.Department = "Sales";
+                    payrollService.UpdateEmployee(model);
+                    break;
+                case 4:
                     verify = false;
                     break;
                 default:

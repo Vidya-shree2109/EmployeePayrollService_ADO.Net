@@ -12,7 +12,6 @@ namespace EmployeePayroll_ADO.Net
     {
         public static string connectionString = @"Data Source=(localdb)\\MSSQLLocaldb;Initial Catalog=Payroll_Service";
         SqlConnection connection = new SqlConnection(connectionString);
-
         public void GetAllEmployee()
         {
             try
@@ -135,6 +134,24 @@ namespace EmployeePayroll_ADO.Net
             }
             return EmployeeList;
         }
-
+        public bool UpdateEmployee(EmployeeModel obj)
+        {
+            SqlCommand com = new SqlCommand("spUpdateEmployeeDetails", connection);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", obj.Id);
+            com.Parameters.AddWithValue("@Salary", obj.Salary);
+            com.Parameters.AddWithValue("@Department", obj.Department);
+            connection.Open();
+            int i = com.ExecuteNonQuery();
+            connection.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
